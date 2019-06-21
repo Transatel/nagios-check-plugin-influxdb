@@ -8,7 +8,7 @@ A simple nagios plugin to query an InfluxDB database.
 
 ## Details
 
-Group by tags are supported, every returned series woudl get tested against threshold values.
+Group by tags are supported, every returned series would get tested against threshold values.
 
 Selecting a range of time is also supported. All the values outside thresholds are returned in the text output part. Only the value farthest away to the threshold range is returned in the perf data part (one for each series).
 
