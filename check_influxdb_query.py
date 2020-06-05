@@ -100,6 +100,8 @@ parser.add_argument("--user", type=str, required=False,
                     help="InfluxDB user")
 parser.add_argument("--password", type=str, required=False,
                     help="InfluxDB password")
+parser.add_argument("--ssl", action='store_const', const=True, required=False,
+                    help="connect using SSL")
 
 parser.add_argument("--schema", type=str, required=True,
                     help="InfluxDB schema / database from which to retrieve input time series")
@@ -120,7 +122,7 @@ args = parser.parse_args()
 # -------------------------------------------------------------------------
 # QUERY
 
-influx_client = InfluxDBClient(args.host, args.port, args.user, args.password, args.schema)
+influx_client = InfluxDBClient(args.host, args.port, args.user, args.password, args.schema, ssl=args.ssl, verify_ssl=True)
 
 resultset_list = influx_client.query(args.query)
 
