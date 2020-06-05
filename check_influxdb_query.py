@@ -111,9 +111,9 @@ parser.add_argument("--query", type=str, required=True,
                     help="InfluxDB query")
 
 parser.add_argument("--warning", type=str, required=False,
-                    help="warning thresholds, nagios format")
+                    help="warning thresholds, Nagios format")
 parser.add_argument("--critical", type=str, required=False,
-                    help="ciritcal thresholds, nagios format")
+                    help="critical thresholds, Nagios format")
 
 parser.add_argument("--output-template", type=str, required=False, default="Values: %s",
                     help="Template for outputing message")
