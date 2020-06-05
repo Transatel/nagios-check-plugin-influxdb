@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 import argparse
 from pprint import pprint
@@ -159,7 +159,7 @@ for key, series in resultset_list.items():
             print("Query returned " + str(nb_fields) + " fields instead of 1.")
             exit(nagios_status)
 
-        for column, value in row.iteritems():
+        for column, value in row.items():
             if column == 'time':
                 # current_timestamp = value
                 continue
@@ -201,7 +201,7 @@ if is_resultset_empty:
     nagios_status_desc = 'UNKNOWN'
     message = 'No data returned from query'
     message = nagios_status_desc + " - " + message
-    print message
+    print(message)
     exit(nagios_status)
 
 
@@ -211,21 +211,21 @@ if is_resultset_empty:
 perfData = ""
 
 perfDataDict = {}
-for series_name, tmp_message_ok_list in tmp_message_ok_dict.iteritems():
+for series_name, tmp_message_ok_list in tmp_message_ok_dict.items():
     farthest = get_farthest_point_from_thresholds(tmp_message_ok_list, args.critical)
     if series_name == 'None':
         perfDataKey = 'value'
     else:
         perfDataKey = series_name
     perfDataDict[perfDataKey] = farthest
-for series_name, tmp_message_warn_list in tmp_message_warn_dict.iteritems():
+for series_name, tmp_message_warn_list in tmp_message_warn_dict.items():
     farthest = get_farthest_point_from_thresholds(tmp_message_warn_list, args.critical)
     if series_name == 'None':
         perfDataKey = 'value'
     else:
         perfDataKey = series_name
     perfDataDict[perfDataKey] = farthest
-for series_name, tmp_message_crit_list in tmp_message_crit_dict.iteritems():
+for series_name, tmp_message_crit_list in tmp_message_crit_dict.items():
     farthest = get_farthest_point_from_thresholds(tmp_message_crit_list, args.critical)
     if series_name == 'None':
         perfDataKey = 'value'
@@ -234,7 +234,7 @@ for series_name, tmp_message_crit_list in tmp_message_crit_dict.iteritems():
     perfDataDict[perfDataKey] = farthest
 
 perfDataList = []
-for k, v in perfDataDict.iteritems():
+for k, v in perfDataDict.items():
     perfDataList.append("'" + k + "'=" + str(v))
 perfData = ';'.join(perfDataList)
 
@@ -248,7 +248,7 @@ message = "Everything OK"
 
 if is_crit:
     tmp_message_list = []
-    for series_name, tmp_message_crit_list in tmp_message_crit_dict.iteritems():
+    for series_name, tmp_message_crit_list in tmp_message_crit_dict.items():
         tmp_message_crit_list2 = [str(i) for i in tmp_message_crit_list]
         tmp_message = ', '.join(tmp_message_crit_list2)
         if series_name != 'None':
@@ -260,7 +260,7 @@ if is_crit:
     nagios_status_desc = 'CRITICAL'
 elif is_warn:
     tmp_message_list = []
-    for series_name, tmp_message_warn_list in tmp_message_warn_dict.iteritems():
+    for series_name, tmp_message_warn_list in tmp_message_warn_dict.items():
         tmp_message_warn_list2 = [str(i) for i in tmp_message_warn_list]
         tmp_message = ', '.join(tmp_message_warn_list2)
         if series_name != 'None':
@@ -278,5 +278,5 @@ elif is_warn:
 message = nagios_status_desc + " - " + message
 if perfData:
     message += "|" + perfData
-print message
+print(message)
 exit(nagios_status)
