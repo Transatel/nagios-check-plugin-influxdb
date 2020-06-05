@@ -54,6 +54,8 @@ def test_nagios_threshold(value, nagios_threshold):
 
 
 def get_nagios_threshold_middle_point(nagios_threshold):
+    if nagios_threshold is None:
+        return 0
     nt = parse_nagios_threshold(nagios_threshold)
     if nt['low'] == float("-inf") and nt['high'] == float("inf"):
         return 0
