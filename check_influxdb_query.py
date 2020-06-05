@@ -114,6 +114,8 @@ parser.add_argument("--warning", type=str, required=False,
                     help="warning thresholds, Nagios format")
 parser.add_argument("--critical", type=str, required=False,
                     help="critical thresholds, Nagios format")
+parser.add_argument("--missing-as-critical", action='store_const', const=True, required=False,
+                    help="treat missing data as critical state instead of unknown")
 
 parser.add_argument("--output-template", type=str, required=False, default="Values: %s",
                     help="Template for outputing message")
@@ -201,8 +203,12 @@ for key, series in resultset_list.items():
 # EDGE CASE: NO DATA
 
 if is_resultset_empty:
-    nagios_status = 3
-    nagios_status_desc = 'UNKNOWN'
+    if args.missing_as_critical:
+        nagios_status = 2
+        nagios_status_desc = 'CRITICAL'
+    else:
+        nagios_status = 3
+        nagios_status_desc = 'UNKNOWN'
     message = 'No data returned from query'
     message = nagios_status_desc + " - " + message
     print(message)
